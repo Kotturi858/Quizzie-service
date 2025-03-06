@@ -11,6 +11,7 @@ public class User {
 	@Column(name = "user_id")
 	private Long userId;
 
-	private String name;
+	@Column(name = "username")
+	private String user_name;
 	// Other user-related fields
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "badges_student")
+@Table(name = "badges_students")
 public class BadgeStudent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,8 +16,7 @@ public class BadgeStudent {
 	private Badge badge;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "student_id")
 	private User user;
-
-	// Any other relationship metadata
+	
 }
