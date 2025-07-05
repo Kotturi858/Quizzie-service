@@ -1,14 +1,18 @@
 package com.lot.quiz.app.quizzie.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,14 +20,14 @@ public class User {
 
     @Column(name = "username")
     @NotBlank
-    private String user_name;
+    private String userName;
 
     @Column(name = "email")
     @NotBlank
-    @Email(message = "correct email format is required")
+    @Email(message = "correct email format is required") //validators not working
     private String email;
 
-    @Column(name = "password")
-    @NotBlank
-    private transient String password;
+    @Column(name = "password_hash")
+    @NotNull
+    private String password;
 }

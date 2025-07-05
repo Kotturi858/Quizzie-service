@@ -20,7 +20,7 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
 	List<Score> findByUserUserIdOrderByScoreDesc(Long userId);
 
 	// Get top scores across all users (for leaderboard)
-	@Query("SELECT u.user_name, s.score, ROW_NUMBER() OVER (ORDER BY MAX(s.score) DESC) as rank "
-			+ "FROM Score s JOIN s.user u GROUP BY u.user_name, s.score ORDER BY MAX(s.score) DESC LIMIT 4")
+	@Query("SELECT u.userName, s.score, ROW_NUMBER() OVER (ORDER BY MAX(s.score) DESC) as rank "
+			+ "FROM Score s JOIN s.user u GROUP BY u.userName, s.score ORDER BY MAX(s.score) DESC LIMIT 4")
 	List<Object[]> findTopScores();
 }

@@ -5,13 +5,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.lot.quiz.app.quizzie.Repo.GenericRepo.*;
+import com.lot.quiz.app.quizzie.configurations.SecurityConfig;
+import com.lot.quiz.app.quizzie.models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.lot.quiz.app.quizzie.Repo.GenericRepo.BadgeRepository;
-import com.lot.quiz.app.quizzie.Repo.GenericRepo.BadgeStudentRepository;
-import com.lot.quiz.app.quizzie.Repo.GenericRepo.LanguageRepository;
-import com.lot.quiz.app.quizzie.Repo.GenericRepo.ScoreRepository;
 import com.lot.quiz.app.quizzie.dto.BadgeDto;
 import com.lot.quiz.app.quizzie.dto.LanguageDto;
 import com.lot.quiz.app.quizzie.dto.LeaderboardEntryDto;
@@ -33,6 +35,18 @@ public class GenericServiceImpl {
 
 	@Autowired
 	private ScoreRepository scoreRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	private final PasswordEncoder passwordEncoder;
+
+	@Autowired
+	public GenericServiceImpl(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	private static final Logger logger = LoggerFactory.getLogger(GenericServiceImpl.class);
 
 	public QuizResultDto onload(Long userId) {
 		QuizResultDto resultDto = new QuizResultDto();
@@ -82,7 +96,19 @@ public class GenericServiceImpl {
 		return resultDto;
 	}
 
-	public void register(String userName, String email, String password) {
+	public String register(String userName, String email, String password) {
+		// Check if user already exists
+		if (userRepository.findByEmail(email).isPresent()) {
+			return "User with this email already exists.";
+		}
 
+		// Create and save new user
+		User newUser = new User();
+		newUser.setUserName(userName);
+		newUser.setEmail(email);
+		newUser.setPassword(passwordEncoder.encode(password)); // Consider hashing the password before saving
+		logger.info(newUser + "Registering new user: " + newUser.getUserName() + ", email: " + newUser.getEmail() + ", password: " + newUser.getPassword());
+		userRepository.save(newUser);
+		return newUser.getPassword();
 	}
 }

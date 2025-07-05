@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.List;
 
 @Configuration
-public class SecurityConfig implements ApplicationListener<ContextRefreshedEvent> {
+public class SecurityConfig implements ApplicationListener<ContextRefreshedEvent>{
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
