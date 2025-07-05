@@ -12,11 +12,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class LeaderboardEntryDto {
-	public LeaderboardEntryDto(int rank, String name, int score) {
-		this.rank = rank;
-		this.name = name;
-		this.score = score;
-	}
 	@JsonProperty("rank")
     private int rank;
     

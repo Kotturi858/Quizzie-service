@@ -81,4 +81,8 @@ public class GenericServiceImpl {
 
 		return resultDto;
 	}
+
+	public void register(String userName, String email, String password) {
+
+	}
 }

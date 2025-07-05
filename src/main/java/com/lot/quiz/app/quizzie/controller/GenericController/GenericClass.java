@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +30,13 @@ public class GenericClass {
 	public ResponseEntity<QuizResultDto> getOnloadData(@RequestParam Long userId) {
 		QuizResultDto data = genericService.onload(userId);
 		return new ResponseEntity<QuizResultDto>(data, HttpStatus.OK);
+	}
+
+	@PostMapping("/quizzie/api/v1/register")
+	public ResponseEntity<String> registerUser(@RequestParam String userName, @RequestParam String email,
+			@RequestParam String password) {
+		genericService.register(userName, email, password);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 }

@@ -6,21 +6,6 @@ import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
 
-
-//public class LanguageDto implements Serializable {
-//	/**
-//	 * 
-//	 */
-//	private static final long serialVersionUID = 1L;
-//	public LanguageDto(Long languageId, String languageName) {
-//		this.languageId = languageId;
-//		this.languageName = languageName;
-//	}
-//
-//	private Long languageId;
-//	private String languageName;
-//}
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,15 +21,6 @@ public class LanguageDto implements Serializable {
     
     @JsonProperty("name")
     private String name;
-    
-    // Default no-args constructor required by Jackson
-    public LanguageDto() {
-    }
-    
-    public LanguageDto(Long languageId, String name) {
-        this.languageId = languageId;
-        this.name = name;
-    }
     
     // Standard getters and setters
     public Long getLanguageId() {
