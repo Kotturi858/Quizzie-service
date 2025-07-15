@@ -24,10 +24,10 @@ public class User{
 
     @Column(name = "email")
     @NotBlank
-    @Email(message = "correct email format is required") //validators not working
+    @Email(message = "correct email format is required")
     private String email;
 
     @Column(name = "password_hash")
-    @NotNull
+    @NotBlank
     private String password;
 }

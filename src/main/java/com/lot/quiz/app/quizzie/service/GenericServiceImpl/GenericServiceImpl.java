@@ -2,12 +2,16 @@ package com.lot.quiz.app.quizzie.service.GenericServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.lot.quiz.app.quizzie.Repo.GenericRepo.*;
 import com.lot.quiz.app.quizzie.configurations.SecurityConfig;
 import com.lot.quiz.app.quizzie.models.User;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,6 +112,7 @@ public class GenericServiceImpl {
 		newUser.setEmail(email);
 		newUser.setPassword(passwordEncoder.encode(password)); // Consider hashing the password before saving
 		logger.info(newUser + "Registering new user: " + newUser.getUserName() + ", email: " + newUser.getEmail() + ", password: " + newUser.getPassword());
+
 		userRepository.save(newUser);
 		return newUser.getPassword();
 	}

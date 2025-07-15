@@ -4,6 +4,7 @@
 package com.lot.quiz.app.quizzie.controller.GenericController;
 
 import com.lot.quiz.app.quizzie.models.User;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class GenericClass {
     }
 
     @PostMapping("/quizzie/api/v1/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
+    public ResponseEntity<String> registerUser(@Valid @RequestBody User user) {
         String savedUser = genericService.register(user.getUserName(), user.getEmail(), user.getPassword());
         return new ResponseEntity<String>(savedUser, HttpStatus.CREATED);
     }
