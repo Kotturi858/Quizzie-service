@@ -13,15 +13,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public UserDetails loadUserByUsername(String emailId) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(emailId)
+                .orElseThrow(() -> new UsernameNotFoundException("EmailId not found"));
 
         return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUserName())
+                .username(user.getEmail())
                 .password(user.getPassword())
                 .roles("ADMIN") // must be without "ROLE_" prefix
                 .build();

@@ -18,7 +18,7 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     @NotBlank
     private String userName;
 
@@ -30,4 +30,37 @@ public class User{
     @Column(name = "password_hash")
     @NotBlank
     private String password;
+
+
+    public @NotBlank String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@NotBlank String password) {
+        this.password = password;
+    }
+
+    public @NotBlank @Email(message = "correct email format is required") String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NotBlank @Email(message = "correct email format is required") String email) {
+        this.email = email;
+    }
+
+    public @NotBlank String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(@NotBlank String userName) {
+        this.userName = userName;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

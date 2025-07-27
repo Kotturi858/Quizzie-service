@@ -9,9 +9,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class LeaderboardEntryDto {
+
+    // Default constructor
+    public LeaderboardEntryDto() {
+    }
+
+    // Parameterized constructor
+    public LeaderboardEntryDto(int rank, String name, int score) {
+        this.rank = rank;
+        this.name = name;
+        this.score = score;
+    }
 	@JsonProperty("rank")
     private int rank;
     

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 
 @Data
-@AllArgsConstructor
 public class BadgeDto {
     @JsonProperty("badgeName")
     private String badgeName;
@@ -18,6 +17,12 @@ public class BadgeDto {
 
     // Default constructor
     public BadgeDto() {
+    }
+
+    // Parameterized constructor
+    public BadgeDto(String badgeName, boolean achieved) {
+        this.badgeName = badgeName;
+        this.achieved = achieved;
     }
 
     // Standard getters and setters

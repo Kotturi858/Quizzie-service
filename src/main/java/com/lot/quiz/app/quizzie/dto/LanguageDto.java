@@ -13,7 +13,6 @@ import java.io.Serializable;
 
 // This annotation ensures Jackson can "see" the private fields
 @Data
-@AllArgsConstructor
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class LanguageDto implements Serializable {
     @JsonProperty("languageId")
@@ -21,6 +20,12 @@ public class LanguageDto implements Serializable {
     
     @JsonProperty("name")
     private String name;
+
+    // Parameterized constructor
+    public LanguageDto(Long languageId, String name) {
+        this.languageId = languageId;
+        this.name = name;
+    }
     
     // Standard getters and setters
     public Long getLanguageId() {
