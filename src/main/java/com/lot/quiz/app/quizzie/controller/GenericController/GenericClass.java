@@ -30,8 +30,8 @@ public class GenericClass {
     private final GenericServiceImpl genericService;
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public GenericClass(GenericServiceImpl genericService, JwtService jwtService, UserDetailsService userDetailsService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
