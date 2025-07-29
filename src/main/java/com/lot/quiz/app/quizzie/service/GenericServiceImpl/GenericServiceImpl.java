@@ -42,8 +42,6 @@ public class GenericServiceImpl {
 
     @Autowired
     public GenericServiceImpl(PasswordEncoder passwordEncoder) {
-        System.out.println("------- ###################### -------");
-        System.out.println("GenericServiceImpl constructor called");
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -57,9 +55,7 @@ public class GenericServiceImpl {
 
         CompletableFuture<List<LanguageDto>> future2 = CompletableFuture.supplyAsync(() -> {
             List<Language> languages = languageRepository.findAll();
-            return
-                    languages.stream().map(lang -> new LanguageDto(lang.getLanguageId(), lang.getLanguageName()))
-                            .collect(Collectors.toList());
+            return languages.stream().map(lang -> new LanguageDto(lang.getLanguageId(), lang.getLanguageName())).collect(Collectors.toList());
         });
 
         CompletableFuture<List<Integer>> future3 = CompletableFuture.supplyAsync(() -> {
