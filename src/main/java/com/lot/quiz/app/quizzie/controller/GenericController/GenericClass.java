@@ -6,9 +6,11 @@ package com.lot.quiz.app.quizzie.controller.GenericController;
 import com.lot.quiz.app.quizzie.Repo.GenericRepo.UserRepository;
 import com.lot.quiz.app.quizzie.dto.QuizResultDto;
 import com.lot.quiz.app.quizzie.models.User;
-import com.lot.quiz.app.quizzie.service.GenericService.JwtService;
-import com.lot.quiz.app.quizzie.service.GenericServiceImpl.GenericServiceImpl;
+import com.lot.quiz.app.quizzie.service.GenericService;
+import com.lot.quiz.app.quizzie.service.JwtService;
+import com.lot.quiz.app.quizzie.service.GenericServiceImpl;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +29,16 @@ import java.util.Optional;
  */
 @RestController
 public class GenericClass {
-    private final GenericServiceImpl genericService;
+    private final GenericService genericService;
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public GenericClass(GenericServiceImpl genericService, JwtService jwtService, UserDetailsService userDetailsService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
+    public GenericClass(GenericService genericService, JwtService jwtService,
+                        UserDetailsService userDetailsService, UserRepository userRepository,
+                        PasswordEncoder passwordEncoder) {
         this.genericService = genericService;
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
@@ -45,7 +49,7 @@ public class GenericClass {
     @GetMapping("/quizzie/api/v1/onload-data")
     public ResponseEntity<QuizResultDto> getOnloadData(@RequestParam Long userId) {
         QuizResultDto data = genericService.onload(userId);
-        return new ResponseEntity<QuizResultDto>(data, HttpStatus.OK);
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
     @PostMapping("/quizzie/api/v1/register")
@@ -61,7 +65,7 @@ public class GenericClass {
     }
 
     @PostMapping("/quizzie/api/v1/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody User user, HttpServletResponse response) {
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody User user, HttpServletResponse response) {
         // 1. Authenticate user
         Optional<User> validatedUser = userRepository.findByEmail(user.getEmail());
         if (!passwordEncoder.matches(user.getPassword(), validatedUser.get().getPassword())) {
@@ -70,7 +74,6 @@ public class GenericClass {
 
         // Load user details
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
-
 
         // Generate JWT token
         String accessToken = jwtService.generateToken(userDetails.getUsername(), 36000);

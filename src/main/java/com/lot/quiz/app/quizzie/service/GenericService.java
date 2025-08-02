@@ -1,8 +1,7 @@
-package com.lot.quiz.app.quizzie.service.GenericService;
+package com.lot.quiz.app.quizzie.service;
 
 import org.springframework.stereotype.Service;
 
-import com.lot.quiz.app.quizzie.dto.OnloadDto;
 import com.lot.quiz.app.quizzie.dto.QuizResultDto;
 
 @Service

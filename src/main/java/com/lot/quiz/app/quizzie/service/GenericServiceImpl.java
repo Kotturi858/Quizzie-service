@@ -1,4 +1,4 @@
-package com.lot.quiz.app.quizzie.service.GenericServiceImpl;
+package com.lot.quiz.app.quizzie.service;
 
 import com.lot.quiz.app.quizzie.Repo.GenericRepo.*;
 import com.lot.quiz.app.quizzie.dto.BadgeDto;
@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
-public class GenericServiceImpl {
+public class GenericServiceImpl implements GenericService {
 
     @Autowired
     private BadgeRepository badgeRepository;
@@ -36,7 +36,7 @@ public class GenericServiceImpl {
     private ScoreRepository scoreRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -61,9 +61,9 @@ public class GenericServiceImpl {
         CompletableFuture<List<Integer>> future3 = CompletableFuture.supplyAsync(() -> {
             List<Score> recentScores = scoreRepository.findTop3ByUserUserIdOrderByDateTakenDesc(userId);
             List<Integer> mappedies = new ArrayList<Integer>();
-            mappedies.add(recentScores.get(0).getCorrectQuestions());
-            mappedies.add(recentScores.get(0).getIncorrectQuestions());
-            mappedies.add(recentScores.get(0).getSkippedQuestions());
+            mappedies.add(recentScores.getFirst().getCorrectQuestions());
+            mappedies.add(recentScores.getFirst().getIncorrectQuestions());
+            mappedies.add(recentScores.getFirst().getSkippedQuestions());
 
             return mappedies;
         });
@@ -128,12 +128,11 @@ public class GenericServiceImpl {
             return "User with this email already exists.";
         }
 
-        // Create and save new user
         User newUser = new User();
         newUser.setUserName(userName);
         newUser.setEmail(email);
-        newUser.setPassword(passwordEncoder.encode(password)); // Consider hashing the password before saving
-        logger.info(newUser + "Registering new user: " + newUser.getUserName() + ", email: " + newUser.getEmail() + ", password: " + newUser.getPassword());
+        newUser.setPassword(passwordEncoder.encode(password));
+        logger.info("email:- {}", newUser.getEmail());
 
         userRepository.save(newUser);
         return newUser.getUserName();

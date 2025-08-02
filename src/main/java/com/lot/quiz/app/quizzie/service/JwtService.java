@@ -1,4 +1,4 @@
-package com.lot.quiz.app.quizzie.service.GenericService;
+package com.lot.quiz.app.quizzie.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

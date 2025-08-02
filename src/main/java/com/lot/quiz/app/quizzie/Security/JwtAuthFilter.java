@@ -1,6 +1,6 @@
 package com.lot.quiz.app.quizzie.Security;
 
-import com.lot.quiz.app.quizzie.service.GenericService.JwtService;
+import com.lot.quiz.app.quizzie.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
